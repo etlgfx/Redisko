@@ -98,6 +98,16 @@ class Kohana_Redisko extends Redis {
 			throw new Kohana_Exception('Redis could not connect to host \':host\' using port \':port\'', array(':host' => $this->_host, ':port' => $this->_port));
 		}
 
+		if (isset($config['password']))
+		{
+			$this->auth($config['password']);
+		}
+
+		if (isset($config['database']) && NULL !== $config['database'])
+		{
+			$this->select($config['database']);
+		}
+		
 		// Set prefix
 		if (NULL !== $this->_prefix)
 		{
